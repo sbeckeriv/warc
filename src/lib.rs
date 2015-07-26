@@ -14,7 +14,8 @@ mod Warc{
         let mut attr = HashMap::new();
         let mut records: Vec<Record> = Vec::new();
         let mut current_record: Option<Record> = None;
-        let mut data_chars: Vec<char> = data.chars().collect();
+        let mut data_chars_: Vec<char> = data.chars().collect();
+        let mut data_chars = &data_chars_[..];
         let mut next_new_line = 0;
         let mut ended = false;
         'outer: loop{
@@ -35,9 +36,10 @@ mod Warc{
             }
             pp!(next_new_line);
             pp!(ended);
-            let (s, data_chars) =data_chars.split_at(next_new_line);
+            let (s, rest) =data_chars.split_at(next_new_line);
             pp!(s);
-            pp!(data_chars);
+            pp!(rest);
+            data_chars = rest;
             if ended{ break;}
         }
         return vec![Record::new(attr,  Header::new(header), "".to_string())]
