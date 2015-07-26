@@ -11,6 +11,7 @@ keywords = ["web", "archive", "parsing", "warc"]
 license-file = "./LICENSE-MIT"
 
 [dependencies]
+regex = "0.1.41"
 
 [profile.bench]
 opt-level = 3
