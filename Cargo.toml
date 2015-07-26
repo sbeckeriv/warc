@@ -12,6 +12,7 @@ license-file = "./LICENSE-MIT"
 
 [dependencies]
 regex = "0.1.41"
+nom = "*"
 
 [profile.bench]
 opt-level = 3

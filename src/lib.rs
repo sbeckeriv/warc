@@ -1,13 +1,15 @@
-extern crate regex;
+#[macro_use]
+extern crate nom;
 use std::fmt::{Debug, Formatter, Result};
+mod parser;
+
 macro_rules! pp {
     ($msg:expr) => {{
         println!("{:?}", $msg);
     }};
 }
-
-
 mod Warc{
+    use parser;
     use std::collections::HashMap;
     pub fn parse(data: &String) -> Vec<Record>{
         let mut header = HashMap::new();
@@ -18,6 +20,9 @@ mod Warc{
         let mut data_chars = &data_chars_[..];
         let mut next_new_line = 0;
         let mut ended = false;
+        let v = parser::col_match(&b"Connection: keep-alive\n"[..]);
+        let v = parser::init_line(&b"WARC/0.17\r\n"[..]);
+        pp!(v);
         'outer: loop{
             pp!(data_chars);
             loop {
