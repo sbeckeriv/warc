@@ -20,8 +20,10 @@ mod Warc{
         let mut data_chars = &data_chars_[..];
         let mut next_new_line = 0;
         let mut ended = false;
-        let v = parser::col_match(&b"Connection: keep-alive\n"[..]);
-        let v = parser::init_line(&b"WARC/0.17\r\n"[..]);
+        let v = parser::warc_header(&b"Connection: keep-alive\nConnection: keep-alive\n"[..]);
+        pp!(v);
+
+        let v = parser::warc_header(&b"WARC/0.17\r\nConnection: keep-alive\nConnection: keep-alive\n"[..]);
         pp!(v);
         'outer: loop{
             pp!(data_chars);

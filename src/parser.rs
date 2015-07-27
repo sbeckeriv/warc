@@ -22,7 +22,7 @@ fn token(input: &[u8]) -> IResult<&[u8], &[u8]> {
     IResult::Incomplete(Needed::Size(1))
 }
 named!(pub init_line <&[u8], (&[u8])>,
-     dbg!(chain!(
+dbg!(chain!(
         tag!("WARC")                ~
         tag!("/")                   ~
         space?                      ~
@@ -30,10 +30,10 @@ named!(pub init_line <&[u8], (&[u8])>,
         tag!("\r")?                 ~
         tag!("\n")                  ,
         || {(version)}
-    )
-));
-named!(pub col_match <&[u8], (&[u8], &[u8])>,
-     dbg!(chain!(
+        )
+    ));
+named!(pub header_match <&[u8], (&[u8], &[u8])>,
+dbg!(chain!(
         name: token                 ~
         space?                      ~
         tag!(":")                   ~
@@ -42,5 +42,13 @@ named!(pub col_match <&[u8], (&[u8], &[u8])>,
         tag!("\r")?                 ~
         tag!("\n")                  ,
         || {(name, value)}
+        )
+    ));
+named!(pub header_aggregator<&[u8], Vec<(&[u8],&[u8])> >, many1!(header_match));
+named!(pub warc_header<&[u8], ((&[u8]), Vec<(&[u8],&[u8])>) >,
+chain!(
+    version: init_line              ~
+    headers: header_aggregator      ,
+    move ||{(version, headers)}
     )
-));
+);
