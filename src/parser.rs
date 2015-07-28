@@ -34,7 +34,7 @@ fn token(input: &[u8]) -> IResult<&[u8], &[u8]> {
 }
 named!(pub init_line <&[u8], (&str, &str)>,
 dbg!(chain!(
-        line_ending?                ~
+        multispace?                  ~
         tag!("WARC")                ~
         tag!("/")                   ~
         space?                      ~
@@ -66,7 +66,6 @@ chain!(
     move ||{(version, headers)}
     )
 );
-
 
 named!(pub warc_records<&[u8], Vec<HashMap<&str,&str>> >, many1!(warc_record));
 pub fn warc_record(input: &[u8]) -> IResult<&[u8], HashMap<&str,&str>>{

@@ -20,7 +20,7 @@ mod Warc{
         let mut data_chars = &data_chars_[..];
         let mut next_new_line = 0;
         let mut ended = false;
-        let xx = &b"\nWARC/0.17\nWARC-Type: response\nWARC-Target-URI: dns:www.archive.org\nWARC-Date: 2008-04-30T20:48:25Z\nWARC-IP-Address: 68.87.76.178\nWARC-Record-ID: <urn:uuid:ff728363-2d5f-4f5f-b832-9552de1a6037>\nContent-Type: text/dns\nContent-Length: 56\n\n20080430204825\nwww.archive.org.	589	IN	A	207.241.229.39\n\n"[..];
+        let xx = &b"\n\nWARC/0.17\nWARC-Type: response\nWARC-Target-URI: dns:www.archive.org\nWARC-Date: 2008-04-30T20:48:25Z\nWARC-IP-Address: 68.87.76.178\nWARC-Record-ID: <urn:uuid:ff728363-2d5f-4f5f-b832-9552de1a6037>\nContent-Type: text/dns\nContent-Length: 56\n\n20080430204825\nwww.archive.org.	589	IN	A	207.241.229.39\n\nWARC/0.17\nWARC-Type: response\nWARC-Target-URI: dns:www.archive.org\nWARC-Date: 2008-04-30T20:48:25Z\nWARC-IP-Address: 68.87.76.178\nWARC-Record-ID: <urn:uuid:becker>\nContent-Type: text/dns\nContent-Length: 56\n\n20080430204825\nwww.archive.org.	589	IN	A	207.241.229.39\n\n"[..];
 
         let v = parser::warc_records(xx);
         pp!(v);
